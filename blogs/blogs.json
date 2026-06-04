@@ -1,0 +1,14 @@
+{
+  "repo": "universitat-pompeu-fabra",
+  "feeds": [
+    {
+      "source": "https://www.upf.edu/en/web/e-noticies",
+      "feed_url": "https://www.upf.edu/en/web/e-noticies",
+      "title": "UPF News (e-noticies)",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-06-03T00:00:00Z"
+}

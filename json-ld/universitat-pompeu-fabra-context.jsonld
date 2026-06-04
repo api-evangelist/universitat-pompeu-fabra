@@ -1,0 +1,67 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "upf": "https://data.upf.edu/ns#",
+    "@vocab": "https://schema.org/",
+    "name": "schema:name",
+    "alternateName": "schema:alternateName",
+    "description": "schema:description",
+    "url": "schema:url",
+    "logo": "schema:logo",
+    "sameAs": "schema:sameAs",
+    "address": "schema:address",
+    "telephone": "schema:telephone",
+    "email": "schema:email",
+    "foundingDate": "schema:foundingDate",
+    "department": "schema:department",
+    "CollegeOrUniversity": "schema:CollegeOrUniversity",
+    "Dataset": "schema:Dataset",
+    "DataCatalog": "schema:DataCatalog",
+    "dataset": "schema:dataset",
+    "distribution": "schema:distribution",
+    "ScholarlyArticle": "schema:ScholarlyArticle",
+    "identifier": "schema:identifier",
+    "license": "schema:license",
+    "keywords": "schema:keywords",
+    "creator": "schema:creator",
+    "publisher": "schema:publisher",
+    "datePublished": "schema:datePublished",
+    "community": {
+      "@id": "upf:community",
+      "@type": "@id"
+    },
+    "collection": {
+      "@id": "upf:collection",
+      "@type": "@id"
+    },
+    "item": {
+      "@id": "upf:item",
+      "@type": "@id"
+    },
+    "handle": "upf:handle"
+  },
+  "@type": "CollegeOrUniversity",
+  "@id": "https://www.upf.edu/en/home",
+  "name": "Universitat Pompeu Fabra",
+  "alternateName": "UPF",
+  "url": "https://www.upf.edu/en/home",
+  "description": "Public research university in Barcelona, Spain, publishing institutional open data (CKAN/SPARQL) and a DSpace digital repository (e-Repositori) with OAI-PMH harvesting.",
+  "sameAs": [
+    "https://www.linkedin.com/school/universitat-pompeu-fabra/",
+    "https://github.com/mtg",
+    "https://data.upf.edu/about"
+  ],
+  "department": [
+    {
+      "@type": "DataCatalog",
+      "name": "UPF en Xifres 2.0 (Open Data UPF)",
+      "url": "https://data.upf.edu/about"
+    },
+    {
+      "@type": "Organization",
+      "name": "e-Repositori (Repositori digital de la UPF)",
+      "url": "https://repositori.upf.edu"
+    }
+  ]
+}

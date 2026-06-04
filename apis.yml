@@ -1,0 +1,105 @@
+---
+aid: universitat-pompeu-fabra
+name: Universitat Pompeu Fabra
+description: >-
+  Universitat Pompeu Fabra (UPF) is a public research university in Barcelona,
+  Spain, ranked #266 in the QS World University Rankings 2025. Its public
+  developer footprint centers on the "UPF en Xifres 2.0" linked open data portal
+  (data.upf.edu), which exposes institutional datasets via a CKAN action API and
+  a Virtuoso SPARQL endpoint, and on the UPF Digital Repository (e-Repositori),
+  built on DSpace 7.6 with a public REST API and an OAI-PMH harvesting endpoint.
+  Identity is handled through an adAS / Shibboleth SAML single sign-on service.
+  Most other software is published by research groups (e.g. the Music Technology
+  Group) on GitHub rather than as institutional APIs.
+type: Index
+position: Consumer
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/universitat-pompeu-fabra/refs/heads/main/apis.yml
+tags:
+  - Education
+  - Higher Education
+  - University
+  - Open Data
+  - Research
+  - Library
+  - Repository
+  - SPARQL
+  - OAI-PMH
+  - Spain
+  - Barcelona
+created: '2026-06-03'
+modified: '2026-06-03'
+specificationVersion: '0.19'
+apis:
+  - aid: universitat-pompeu-fabra:open-data-ckan
+    name: UPF Open Data CKAN API
+    description: >-
+      CKAN action API for the "UPF en Xifres 2.0" (Open Data UPF) portal,
+      providing programmatic access to institutional open datasets such as
+      degree programs, campuses, and study plans. The portal is built on CKAN
+      with Virtuoso for linked data publishing.
+    humanURL: https://data.upf.edu/about
+    baseURL: https://data.upf.edu/api/3
+    tags: [ Open Data, CKAN, Datasets, Linked Data ]
+    properties:
+      - type: Documentation
+        url: https://data.upf.edu/about
+  - aid: universitat-pompeu-fabra:sparql
+    name: UPF Open Data SPARQL Endpoint
+    description: >-
+      Virtuoso-backed SPARQL endpoint for querying the linked open data
+      published by the UPF Open Data portal as part of the linked open data
+      movement across universities.
+    humanURL: https://data.upf.edu/about
+    tags: [ SPARQL, Linked Data, Semantic Web, Open Data ]
+    properties:
+      - type: Documentation
+        url: https://data.upf.edu/about
+  - aid: universitat-pompeu-fabra:repository-rest
+    name: UPF Digital Repository REST API (DSpace 7)
+    description: >-
+      Public DSpace 7.6 REST (HAL) API for the e-Repositori, the UPF
+      institutional repository collecting the university's research and academic
+      output. Exposes communities, collections, and items; write operations
+      require authentication.
+    humanURL: https://repositori.upf.edu
+    baseURL: https://repositori.upf.edu/server/api
+    tags: [ Repository, DSpace, Research Output, Scholarly ]
+    properties:
+      - type: Documentation
+        url: https://repositori.upf.edu/server/api
+  - aid: universitat-pompeu-fabra:repository-oai
+    name: UPF Digital Repository OAI-PMH
+    description: >-
+      OAI-PMH 2.0 metadata harvesting endpoint for the e-Repositori (Repositori
+      digital de la UPF), enabling harvesting of repository metadata records.
+      Indexed by BASE, CORE, OpenDOAR, Re3data, and OpenAIRE.
+    humanURL: https://repositori.upf.edu
+    baseURL: https://repositori-api.upf.edu/oai/request
+    tags: [ OAI-PMH, Metadata Harvesting, Repository, Open Access ]
+    properties:
+      - type: Documentation
+        url: https://repositori-api.upf.edu/oai/request?verb=Identify
+common:
+  - type: Website
+    url: https://www.upf.edu/en/home
+  - type: DeveloperPortal
+    url: https://data.upf.edu/about
+  - type: GitHub
+    url: https://github.com/mtg
+  - type: LinkedIn
+    url: https://www.linkedin.com/school/universitat-pompeu-fabra/
+  - type: Authentication
+    url: https://repositori.upf.edu/shibboleth-login
+  - type: Plans
+    url: plans/universitat-pompeu-fabra-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/universitat-pompeu-fabra-rate-limits.yml
+  - type: FinOps
+    url: finops/universitat-pompeu-fabra-finops.yml
+  - type: Review
+    url: review.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

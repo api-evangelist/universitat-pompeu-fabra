@@ -1,0 +1,46 @@
+---
+name: Universitat Pompeu Fabra
+description: Universitat Pompeu Fabra public developer/API footprint review for APIs.json cataloging.
+url: https://raw.githubusercontent.com/api-evangelist/universitat-pompeu-fabra/refs/heads/main/review.yml
+created: '2026-06-03'
+modified: '2026-06-03'
+reviews:
+  - date: '2026-06-03'
+    rating: 3
+    summary: >-
+      Verified UPF's public developer footprint with a no-fabrication discipline.
+      The DSpace 7.6 repository REST API and the OAI-PMH endpoint both resolved
+      live (HTTP 200), with the REST root reporting "DSpace 7.6.8-SNAPSHOT" and
+      OAI Identify returning a valid protocol 2.0 response. The "UPF en Xifres
+      2.0" open data portal (data.upf.edu) is documented as a CKAN + Virtuoso
+      SPARQL platform but did not resolve from the test network (connection
+      refused / HTTP 000), likely due to geo or firewall restrictions; it is
+      cataloged from official documentation rather than a live probe. SSO is
+      handled via adAS / Shibboleth SAML and is gated. No general institutional
+      developer portal or API key program was found; research-group code lives on
+      GitHub orgs such as MTG and aig-upf rather than as institutional APIs.
+    endpoints:
+      - url: https://repositori.upf.edu/server/api
+        status: 200
+        note: DSpace 7 REST root, reports DSpace 7.6.8-SNAPSHOT.
+      - url: https://repositori.upf.edu/server/api/core/items
+        status: 401
+        note: Items endpoint requires authentication for listing.
+      - url: https://repositori-api.upf.edu/oai/request?verb=Identify
+        status: 200
+        note: Valid OAI-PMH 2.0 Identify response, repository launched 2009.
+      - url: https://data.upf.edu/about
+        status: 0
+        note: Documented CKAN + Virtuoso SPARQL portal; did not resolve from test network (geo/firewall).
+      - url: https://data.upf.edu/api/3/action/package_list
+        status: 0
+        note: CKAN action API path; documented but did not resolve from test network.
+      - url: https://www.upf.edu/en/home
+        status: 403
+        note: Official site responded 403 to automated request (bot protection); site is live in browsers.
+      - url: https://github.com/mtg
+        status: 200
+        note: Music Technology Group GitHub org, research/audio software code.
+      - url: https://repositori.upf.edu/shibboleth-login
+        status: 200
+        note: adAS / Shibboleth SAML single sign-on entry point.

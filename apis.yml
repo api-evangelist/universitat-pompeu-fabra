@@ -82,6 +82,8 @@ apis:
       - type: Documentation
         url: https://repositori-api.upf.edu/oai/request?verb=Identify
 common:
+  - type: DomainSecurity
+    url: security/universitat-pompeu-fabra-domain-security.yml
   - type: Website
     url: https://www.upf.edu/en/home
   - type: DeveloperPortal

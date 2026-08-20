@@ -77,7 +77,15 @@ apis:
       require authentication.
     humanURL: https://repositori.upf.edu
     baseURL: https://repositori.upf.edu/server/api
-    tags: [ Repository, DSpace, Research Output, Scholarly ]
+    tags:
+    - Repository
+    - DSpace
+    - Scholarly
+    tags_raw:
+    - Repository
+    - DSpace
+    - Research Output
+    - Scholarly
     properties:
       - type: Documentation
         url: https://repositori.upf.edu/server/api

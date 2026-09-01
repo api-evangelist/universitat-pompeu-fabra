@@ -1,131 +1,343 @@
 ---
 aid: universitat-pompeu-fabra
 name: Universitat Pompeu Fabra
+x-type: university
+x-category: Public Research University
 description: >-
   Universitat Pompeu Fabra (UPF) is a public research university in Barcelona,
-  Spain, ranked #266 in the QS World University Rankings 2025. Its public
-  developer footprint centers on the "UPF en Xifres 2.0" linked open data portal
-  (data.upf.edu), which exposes institutional datasets via a CKAN action API and
-  a Virtuoso SPARQL endpoint, and on the UPF Digital Repository (e-Repositori),
-  built on DSpace 7.6 with a public REST API and an OAI-PMH harvesting endpoint.
-  Identity is handled through an adAS / Shibboleth SAML single sign-on service.
-  Most other software is published by research groups (e.g. the Music Technology
-  Group) on GitHub rather than as institutional APIs.
+  Catalonia, Spain, founded in 1990 and ranked #266 in the QS World University
+  Rankings 2025. UPF operates no developer portal and publishes no OpenAPI,
+  AsyncAPI or SDK of its own; a re-profile on 2026-09-01 probed every candidate
+  host and found none. What it does operate, verified live, is the UPF Digital
+  Repository (e-Repositori) at repositori.upf.edu — self-hosted on UPF's own
+  domain running DSpace 7.6.8, whose REST/HAL API answers at /server/api with 67
+  link relations over 78 communities, 1,022 collections and 43,503 discoverable
+  objects, and whose OAI-PMH 2.0 endpoint answers verb=Identify at
+  repositori-api.upf.edu with 13 metadata formats and 100 sets. The repository,
+  the host and the content are UPF's; the API contract is the DSpace project's
+  generic open-source one and is deliberately not saved here. The same host runs
+  a real Shibboleth SP — the REST API returns WWW-Authenticate: shibboleth with
+  a Shibboleth.sso/Login location — and UPF's own SAML 2.0 Identity Provider is
+  registered in eduGAIN through RedIRIS SIR, the Spanish national research and
+  education federation, as entityID https://www.rediris.es/sir/upfidp with
+  shibmd:Scope upf.edu, Sirtfi asserted and the REFEDS Research and Scholarship
+  entity category. UPF is a Crossref member (member 14960, DOI prefix 10.31009,
+  1,593 DOIs) and holds ROR 04n0g0b29; it has no DataCite client of its own.
+  The "UPF en Xifres 2.0" linked open data portal that the June 2026 profile was
+  built around — a CKAN action API and a Virtuoso SPARQL endpoint at
+  data.upf.edu — no longer exists: data.upf.edu returns an authoritative
+  NXDOMAIN from UPF's own nameservers, and both entries have been removed. Most
+  other UPF software is published by research groups, above all the Music
+  Technology Group on GitHub, rather than as institutional APIs.
 type: Index
 deliveryModel:
   model: saas
   open_source: false
-  commercial: true
-  callable_host: false
-  label: Hosted service · you call their endpoint
+  commercial: false
+  callable_host: true
+  label: Institution-operated repository endpoints · free to call, read-only
   confidence: medium
   source:
-  - pricing
-  generated: '2026-08-28'
-  method: derived
+  - probed
+  generated: '2026-09-01'
+  method: probed
 accessModel:
   pricing: free
-  onboarding: unknown
+  onboarding: none
   trial: false
-  try_now: false
-  public: false
-  label: Free
+  try_now: true
+  public: true
+  label: Free · no key required on the probed read endpoints
   confidence: medium
   source:
-  - plans
-  generated: '2026-07-22'
-  method: derived
+  - probed
+  generated: '2026-09-01'
+  method: probed
 position: Consumer
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/universitat-pompeu-fabra.png
 url: https://raw.githubusercontent.com/api-evangelist/universitat-pompeu-fabra/refs/heads/main/apis.yml
 tags:
-  - Education
-  - Higher Education
   - University
-  - Open Data
-  - Research
-  - Library
-  - Repository
-  - SPARQL
-  - OAI-PMH
+  - Higher Education
+  - Education
+  - Public Research University
   - Spain
+  - Catalonia
   - Barcelona
+  - Institutional Repository
+  - Research Data
+  - Identity Federation
+  - OAI-PMH
+  - DSpace
+  - Shibboleth
+  - Crossref
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-09-01'
 specificationVersion: '0.23'
 apis:
-  - aid: universitat-pompeu-fabra:open-data-ckan
-    name: UPF Open Data CKAN API
-    description: >-
-      CKAN action API for the "UPF en Xifres 2.0" (Open Data UPF) portal,
-      providing programmatic access to institutional open datasets such as
-      degree programs, campuses, and study plans. The portal is built on CKAN
-      with Virtuoso for linked data publishing.
-    humanURL: https://data.upf.edu/about
-    baseURL: https://data.upf.edu/api/3
-    tags: [ Open Data, CKAN, Datasets, Linked Data ]
-    properties:
-      - type: Documentation
-        url: https://data.upf.edu/about
-  - aid: universitat-pompeu-fabra:sparql
-    name: UPF Open Data SPARQL Endpoint
-    description: >-
-      Virtuoso-backed SPARQL endpoint for querying the linked open data
-      published by the UPF Open Data portal as part of the linked open data
-      movement across universities.
-    humanURL: https://data.upf.edu/about
-    tags: [ SPARQL, Linked Data, Semantic Web, Open Data ]
-    properties:
-      - type: Documentation
-        url: https://data.upf.edu/about
   - aid: universitat-pompeu-fabra:repository-rest
     name: UPF Digital Repository REST API (DSpace 7)
+    x-operator: institution
     description: >-
-      Public DSpace 7.6 REST (HAL) API for the e-Repositori, the UPF
-      institutional repository collecting the university's research and academic
-      output. Exposes communities, collections, and items; write operations
-      require authentication.
+      e-Repositori (Repositori digital de la UPF) is UPF's open-access
+      institutional repository, self-hosted on UPF's own domain. Probed
+      2026-09-01: GET https://repositori.upf.edu/server/api returns HTTP 200
+      application/hal+json, a DSpace 7.6.8-SNAPSHOT HAL root naming itself
+      "Repositori digital de la UPF" and advertising 67 link relations
+      (items, collections, communities, discover, bitstreams, versions,
+      statistics, pid, oidc, submissions, workflow). /core/communities returns
+      78, /core/collections returns 1,022 and /discover/search/objects returns
+      43,503 total elements, all unauthenticated. /core/items returns HTTP 401
+      — item listing requires authentication while discovery does not. The
+      deployment, the host and the content are UPF's; the API contract is the
+      DSpace project's generic one, so no specification is saved under this
+      institution.
     humanURL: https://repositori.upf.edu
     baseURL: https://repositori.upf.edu/server/api
     tags:
-    - Repository
+    - Institutional Repository
+    - Open Access
     - DSpace
     - Research Output
     - Scholarly
     tags_raw:
-    - Repository
+    - Institutional Repository
+    - Open Access
     - DSpace
     - Research Output
     - Scholarly
     properties:
-      - type: Documentation
+      - type: APIReference
         url: https://repositori.upf.edu/server/api
+      - type: Documentation
+        url: https://repositori.upf.edu
   - aid: universitat-pompeu-fabra:repository-oai
-    name: UPF Digital Repository OAI-PMH
+    name: UPF Digital Repository OAI-PMH Endpoint
+    x-operator: institution
     description: >-
-      OAI-PMH 2.0 metadata harvesting endpoint for the e-Repositori (Repositori
-      digital de la UPF), enabling harvesting of repository metadata records.
-      Indexed by BASE, CORE, OpenDOAR, Re3data, and OpenAIRE.
+      OAI-PMH 2.0 metadata harvesting endpoint for e-Repositori, on UPF's own
+      host. Probed 2026-09-01: verb=Identify returns HTTP 200 text/xml with
+      repositoryName "Repositori digital de la UPF", repositoryIdentifier
+      repositori.upf.edu, adminEmail repositori@upf.edu, protocolVersion 2.0,
+      earliestDatestamp 2009-01-23T11:32:22Z, deletedRecord transient,
+      granularity YYYY-MM-DDThh:mm:ssZ; verb=ListMetadataFormats returns 13
+      prefixes (oai_dc, qdc, mods, mets, marc, etdms, didl, ore, rdf, xoai,
+      dim, uketd_dc, rpb); verb=ListSets returns 100 setSpecs; verb=ListRecords
+      with metadataPrefix=oai_dc returns 324,957 bytes of records. Indexed by
+      re3data (r3d100010751), BASE, CORE, OpenDOAR and OpenAIRE. This is the
+      education-regime oai-pmh conformance evidence and the clearest
+      institution-operated machine-readable surface UPF has.
     humanURL: https://repositori.upf.edu
     baseURL: https://repositori-api.upf.edu/oai/request
-    tags: [ OAI-PMH, Metadata Harvesting, Repository, Open Access ]
+    tags:
+    - OAI-PMH
+    - Metadata Harvesting
+    - Institutional Repository
+    - Open Access
     properties:
       - type: Documentation
         url: https://repositori-api.upf.edu/oai/request?verb=Identify
+  - aid: universitat-pompeu-fabra:identity-federation
+    name: UPF SAML 2.0 Identity Provider (RedIRIS SIR / eduGAIN)
+    x-operator: federation
+    description: >-
+      UPF's institutional single sign-on, registered in eduGAIN through RedIRIS
+      SIR, the Spanish national research and education federation. entityID
+      https://www.rediris.es/sir/upfidp, role IDPSSODescriptor, registration
+      authority http://www.rediris.es/, registrationInstant 2018-05-24,
+      shibmd:Scope upf.edu, mdui:DomainHint upf.edu, assurance certification
+      https://refeds.org/sirtfi and entity category
+      http://refeds.org/category/research-and-scholarship. Probed 2026-09-01:
+      the entityID returns HTTP 200 text/xml, 10,878 bytes of SAML 2.0
+      metadata; SSOService and SingleLogoutService resolve to
+      https://sir.rediris.es/upf/saml2/idp/. A federation is shared by
+      definition and the SSO endpoints run on RedIRIS infrastructure under a
+      UPF-specific /upf/ path, but the entity, the scope and the user
+      population are UPF's — recorded as federation, never deleted as a shared
+      host.
+    humanURL: https://www.rediris.es/sir/
+    baseURL: https://www.rediris.es/sir/upfidp
+    tags:
+    - Identity Federation
+    - SAML
+    - eduGAIN
+    - Shibboleth
+    - Single Sign-On
+    properties:
+      - type: Documentation
+        url: https://www.rediris.es/sir/
+  - aid: universitat-pompeu-fabra:crossref-member
+    name: Crossref Membership (member 14960, prefix 10.31009)
+    x-operator: registry
+    description: >-
+      UPF is a Crossref member and registers DOIs under its own prefix. Probed
+      2026-09-01: GET https://api.crossref.org/members/14960 returns HTTP 200
+      with primary-name "Universitat Pompeu Fabra", prefixes ["10.31009"] and
+      counts current-dois 563, backfile-dois 1030, total-dois 1593; GET
+      https://api.crossref.org/prefixes/10.31009 returns HTTP 200 resolving the
+      prefix back to member 14960. This is a fact about UPF, not a
+      misattribution — the Crossref API contract is Crossref's and is not saved
+      here. UPF has no DataCite client of its own: a query of
+      api.datacite.org/clients for "pompeu fabra" returns zero, while 2,733
+      DataCite DOIs carry a UPF ROR affiliation registered by other clients.
+    humanURL: https://www.crossref.org/
+    baseURL: https://api.crossref.org/members/14960
+    tags:
+    - Crossref
+    - DOI
+    - Scholarly Infrastructure
+    - Persistent Identifiers
+    properties:
+      - type: Documentation
+        url: https://api.crossref.org/members/14960
+  - aid: universitat-pompeu-fabra:ror
+    name: ROR Registration (04n0g0b29)
+    x-operator: registry
+    description: >-
+      UPF's entry in the Research Organization Registry. Probed 2026-09-01: GET
+      https://api.ror.org/v2/organizations/04n0g0b29 returns HTTP 200
+      application/json with ror_display "Universitat Pompeu Fabra". The
+      separately-registered UPF Barcelona School of Management holds ROR
+      04m3cqq68. The ROR API is ROR's contract, not UPF's; the registration is
+      UPF's identity in the scholarly graph and is recorded as membership only.
+    humanURL: https://ror.org/04n0g0b29
+    baseURL: https://api.ror.org/v2/organizations/04n0g0b29
+    tags:
+    - ROR
+    - Persistent Identifiers
+    - Scholarly Infrastructure
+    properties:
+      - type: Documentation
+        url: https://ror.org/04n0g0b29
+  - aid: universitat-pompeu-fabra:libguides
+    name: Guies BibTIC (Springshare LibGuides tenant)
+    x-operator: tenant
+    description: >-
+      guiesbibtic.upf.edu is UPF Library/CRAI's guides platform and the host of
+      its generative-AI guidance for students and staff. It is not
+      UPF-operated software: DNS resolves guiesbibtic.upf.edu as a CNAME to
+      secure-eu.libguides.com -> region-eu.libguides.com, and responses carry
+      x-backend-server libguides-eu-1.springyaws.com and x-springy-cache
+      headers. A vendor platform behind an institution-owned hostname —
+      recorded as a tenant relationship, with no Springshare contract saved
+      under UPF. The content is UPF's and it is the only readable surface
+      carrying UPF's AI posture, because every www.upf.edu URL is behind a
+      Cloudflare bot challenge.
+    humanURL: https://guiesbibtic.upf.edu/
+    baseURL: https://guiesbibtic.upf.edu/iag
+    tags:
+    - Library
+    - LibGuides
+    - AI Guidance
+    - Tenant
+    properties:
+      - type: Documentation
+        url: https://guiesbibtic.upf.edu/iag
+x-coverage:
+  state: covered
+  reason: covered
+  detail: >-
+    UPF operates no developer portal and publishes no specification of its own,
+    but this is not a blank profile: a 2026-09-01 re-probe confirmed two
+    institution-operated machine-readable surfaces on upf.edu (the e-Repositori
+    DSpace 7.6.8 REST/HAL API and its OAI-PMH 2.0 endpoint), a deployed
+    Shibboleth SP on the same host, one federation identity in eduGAIN via
+    RedIRIS SIR, two identifier-registry memberships (Crossref member 14960 /
+    prefix 10.31009, ROR 04n0g0b29), and one vendor tenancy behind an
+    institution hostname (guiesbibtic.upf.edu CNAMEs to secure-eu.libguides.com,
+    Springshare). The June 2026 profile was built around the "UPF en Xifres 2.0"
+    open data portal — a CKAN action API and a Virtuoso SPARQL endpoint at
+    data.upf.edu. That host is gone: an authoritative NXDOMAIN from UPF's own
+    nameservers (ns1-ns6.upf.edu), reproduced against 8.8.8.8 and 1.1.1.1. The
+    June profile had already observed HTTP 000 and excused it as "geo/firewall
+    restrictions", cataloging the portal from documentation rather than a live
+    probe; both API entries and the DeveloperPortal pointer have now been
+    removed as dead. No course catalog, timetable, registrar, library discovery,
+    research-computing or campus-life API was found on any upf.edu host:
+    apis./developer./developers./opendata./dades./sso./idp./adas./guiadocent./
+    horaris./biblioteca./cataleg./discovery./portal.upf.edu all NXDOMAIN, and
+    api.upf.edu resolves to 84.89.128.15 but resets the TLS connection on every
+    request. www.upf.edu, including /llms.txt, /robots.txt, /web/transparencia
+    and /web/upeq/open-data, returns HTTP 403 from a Cloudflare bot challenge to
+    curl with full browser headers and to WebFetch alike — live but unreadable
+    by us, which is a finding about the edge, not about UPF. repositori.upf.edu
+    /llms.txt returns a 200 that is an Anubis bot-check interstitial, not an
+    llms.txt, so no AgentDirectives pointer is emitted.
+  evidence:
+    - url: https://repositori.upf.edu/server/api
+      status: 200
+    - url: https://repositori.upf.edu/server/api/core/communities
+      status: 200
+    - url: https://repositori.upf.edu/server/api/discover/search/objects?size=1
+      status: 200
+    - url: https://repositori.upf.edu/server/api/authn/status
+      status: 200
+    - url: https://repositori.upf.edu/server/api/core/items?size=1
+      status: 401
+    - url: https://repositori-api.upf.edu/oai/request?verb=Identify
+      status: 200
+    - url: https://repositori-api.upf.edu/oai/request?verb=ListMetadataFormats
+      status: 200
+    - url: https://repositori-api.upf.edu/oai/request?verb=ListSets
+      status: 200
+    - url: https://www.rediris.es/sir/upfidp
+      status: 200
+    - url: https://www.rediris.es/sir/edugain-sir-metadata.xml
+      status: 200
+    - url: https://api.crossref.org/members/14960
+      status: 200
+    - url: https://api.crossref.org/prefixes/10.31009
+      status: 200
+    - url: https://api.ror.org/v2/organizations/04n0g0b29
+      status: 200
+    - url: https://guiesbibtic.upf.edu/iag
+      status: 200
+    - url: https://www.re3data.org/api/v1/repository/r3d100010751
+      status: 200
+    - url: https://github.com/MTG
+      status: 200
+    - url: https://data.upf.edu/about
+      status: 0
+    - url: https://data.upf.edu/api/3/action/package_list
+      status: 0
+    - url: https://www.upf.edu/en/home
+      status: 403
+    - url: https://www.upf.edu/llms.txt
+      status: 403
+    - url: https://api.upf.edu/
+      status: 0
+  generated: '2026-09-01'
+  method: probed
 common:
-  - type: DomainSecurity
-    url: security/universitat-pompeu-fabra-domain-security.yml
   - type: Website
     url: https://www.upf.edu/en/home
-  - type: DeveloperPortal
-    url: https://data.upf.edu/about
+  - type: APIReference
+    url: https://repositori.upf.edu/server/api
+  - type: Documentation
+    url: https://repositori-api.upf.edu/oai/request?verb=Identify
+  - type: ResearchRepository
+    url: https://repositori.upf.edu
+  - type: IdentityFederation
+    url: https://www.rediris.es/sir/upfidp
+  - type: LibraryCatalog
+    url: https://guiesbibtic.upf.edu/
+  - type: AIPolicy
+    url: https://guiesbibtic.upf.edu/iag
+  - type: AITooling
+    url: https://guiesbibtic.upf.edu/prestatges-virtuals/IA_ensenyament
+  - type: Authentication
+    url: https://repositori.upf.edu/server/api/authn
   - type: GitHub
-    url: https://github.com/mtg
+    url: https://github.com/MTG
   - type: LinkedIn
     url: https://www.linkedin.com/school/universitat-pompeu-fabra/
-  - type: Authentication
-    url: https://repositori.upf.edu/shibboleth-login
+  - type: Conformance
+    url: conformance/universitat-pompeu-fabra-conformance.yml
+  - type: JSONLD
+    url: json-ld/universitat-pompeu-fabra-context.jsonld
+  - type: DomainSecurity
+    url: security/universitat-pompeu-fabra-domain-security.yml
   - type: Plans
     url: plans/universitat-pompeu-fabra-plans-pricing.yml
   - type: RateLimits

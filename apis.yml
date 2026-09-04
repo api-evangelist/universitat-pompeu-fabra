@@ -53,7 +53,7 @@ accessModel:
   - probed
   generated: '2026-09-01'
   method: probed
-position: Consumer
+position: Consuming
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/universitat-pompeu-fabra.png
 url: https://raw.githubusercontent.com/api-evangelist/universitat-pompeu-fabra/refs/heads/main/apis.yml

@@ -163,6 +163,12 @@ apis:
     - SAML
     - eduGAIN
     - Shibboleth
+    - SSO
+    tags_raw:
+    - Identity Federation
+    - SAML
+    - eduGAIN
+    - Shibboleth
     - Single Sign-On
     properties:
       - type: Documentation
@@ -227,6 +233,11 @@ apis:
     humanURL: https://guiesbibtic.upf.edu/
     baseURL: https://guiesbibtic.upf.edu/iag
     tags:
+    - Library
+    - LibGuides
+    - AI Guidance
+    - Tenants
+    tags_raw:
     - Library
     - LibGuides
     - AI Guidance

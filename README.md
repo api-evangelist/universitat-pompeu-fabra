@@ -64,27 +64,39 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Universitat Pompeu Fabra (UPF) is a public research university in Barcelona, Spain, ranked #266 in the QS World University Rankings 2025. This repository catalogs UPF's public developer and API footprint as an APIs.json provider profile for the API Evangelist network. The confirmed footprint centers on the "UPF en Xifres 2.0" linked open data portal (CKAN + SPARQL) and the e-Repositori institutional repository (DSpace 7.6 REST API + OAI-PMH).
+Universitat Pompeu Fabra (UPF) is a public research university in Barcelona, Catalonia, Spain, founded in 1990 and ranked #266 in the QS World University Rankings 2025. This repository catalogs UPF's public developer and API footprint as an APIs.json provider profile for the API Evangelist network. Re-profiled 2026-09-01 under the university pipeline, which settles **who operates each surface** before saving anything. UPF operates no developer portal and publishes no OpenAPI, AsyncAPI or SDK of its own. What it does operate, verified live, is the e-Repositori institutional repository on its own domain (DSpace 7.6.8 REST/HAL API + OAI-PMH 2.0 + a deployed Shibboleth SP), alongside a SAML identity in eduGAIN via RedIRIS SIR and Crossref/ROR registry memberships.
 
 - APIs.json: https://raw.githubusercontent.com/api-evangelist/universitat-pompeu-fabra/refs/heads/main/apis.yml
 - Run with Naftiko: https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=universitat-pompeu-fabra-api-evangelist&utm_content=repo
 
 ## Type
 
+- university / Public Research University
 - Index
 - Consumer
 - 3rd-Party
 
 ## Tags
 
-Education, Higher Education, University, Open Data, Research, Library, Repository, SPARQL, OAI-PMH, Spain, Barcelona
+University, Higher Education, Education, Public Research University, Spain, Catalonia, Barcelona, Institutional Repository, Research Data, Identity Federation, OAI-PMH, DSpace, Shibboleth, Crossref
 
-## APIs
+## Surfaces (each carries an operator)
 
-- **UPF Open Data CKAN API** — CKAN action API for the UPF Open Data portal. Docs: https://data.upf.edu/about
-- **UPF Open Data SPARQL Endpoint** — Virtuoso SPARQL endpoint for linked open data. Docs: https://data.upf.edu/about
-- **UPF Digital Repository REST API (DSpace 7)** — DSpace 7.6 REST/HAL API for the e-Repositori. Docs: https://repositori.upf.edu/server/api
-- **UPF Digital Repository OAI-PMH** — OAI-PMH 2.0 metadata harvesting endpoint. Docs: https://repositori-api.upf.edu/oai/request?verb=Identify
+| Surface | Operator | Base |
+|---|---|---|
+| UPF Digital Repository REST API (DSpace 7.6.8) | `institution` | https://repositori.upf.edu/server/api |
+| UPF Digital Repository OAI-PMH | `institution` | https://repositori-api.upf.edu/oai/request |
+| UPF SAML 2.0 Identity Provider (RedIRIS SIR / eduGAIN) | `federation` | https://www.rediris.es/sir/upfidp |
+| Crossref membership (member 14960, prefix 10.31009) | `registry` | https://api.crossref.org/members/14960 |
+| ROR registration (04n0g0b29) | `registry` | https://api.ror.org/v2/organizations/04n0g0b29 |
+| Guies BibTIC (Springshare LibGuides tenant) | `tenant` | https://guiesbibtic.upf.edu/iag |
+
+No specification is saved for the DSpace REST API: the deployment and the content are UPF's, but the contract is the DSpace project's generic open-source one and belongs with DSpace, not with UPF.
+
+## Conformance (education regime)
+
+- [conformance/universitat-pompeu-fabra-conformance.yml](conformance/universitat-pompeu-fabra-conformance.yml)
+- Live-evidenced: `oai-pmh`, `shibboleth`, `saml`, `crossref`. Recorded false with evidence: `datacite`, `scim`, `lti`, `orcid`, `oneroster`, `ed-fi`, `caliper`, `qti`.
 
 ## Plans / Rate Limits / FinOps
 
@@ -95,23 +107,28 @@ Education, Higher Education, University, Open Data, Research, Library, Repositor
 ## Timestamps
 
 - Created: 2026-06-03
-- Modified: 2026-06-03
+- Modified: 2026-09-01
 
 ## Common Properties
 
-- Website: https://www.upf.edu/en/home
-- Developer Portal (Open Data): https://data.upf.edu/about
-- GitHub (Music Technology Group): https://github.com/mtg
+- Website: https://www.upf.edu/en/home (HTTP 403 — Cloudflare bot challenge; live but unreadable by us)
+- API Reference: https://repositori.upf.edu/server/api
+- Research Repository: https://repositori.upf.edu
+- Identity Federation: https://www.rediris.es/sir/upfidp
+- AI Policy / AI Tooling: https://guiesbibtic.upf.edu/iag
+- GitHub (Music Technology Group): https://github.com/MTG
 - LinkedIn: https://www.linkedin.com/school/universitat-pompeu-fabra/
-- Authentication (Shibboleth SSO): https://repositori.upf.edu/shibboleth-login
 
 ## Notes
 
-- The DSpace REST API and OAI-PMH endpoints were verified live (HTTP 200) on 2026-06-03; the REST root reports DSpace 7.6.8.
-- The data.upf.edu open data portal is documented as CKAN + Virtuoso SPARQL but did not resolve from the test network (HTTP 000), likely due to geo/firewall restrictions. It is cataloged from official documentation, not a live probe.
-- UPF identity uses adAS / Shibboleth SAML SSO and is gated. No public institutional API key program or unified developer portal was found.
-- Research-group code (e.g. MTG, aig-upf, IPCV, wn-upf) lives on GitHub but is not an institutional API offering.
-- No endpoints were fabricated; unverifiable items are noted as such in review.yml.
+- **The `data.upf.edu` open data portal is gone.** The June 2026 profile was built around "UPF en Xifres 2.0" — a CKAN action API and a Virtuoso SPARQL endpoint at `data.upf.edu` — and recorded both as APIs. That host now returns an authoritative NXDOMAIN from UPF's own nameservers (ns1-ns6.upf.edu), reproduced against 8.8.8.8 and 1.1.1.1. The June profile had itself observed HTTP 000 and excused it as "likely geo/firewall restrictions", cataloging the portal from documentation rather than a live probe. Both API entries and the DeveloperPortal pointer have been removed as dead.
+- The DSpace REST API and OAI-PMH endpoints were re-verified live on 2026-09-01: 78 communities, 1,022 collections, 43,503 discoverable objects, 13 OAI metadata formats, 100 sets, earliest datestamp 2009-01-23.
+- `repositori.upf.edu` advertises a real Shibboleth SP: the REST API answers with `WWW-Authenticate: shibboleth ... location="https://repositori.upf.edu/Shibboleth.sso/Login?..."`.
+- `guiesbibtic.upf.edu` is a vendor tenancy behind an institution hostname — it CNAMEs to `secure-eu.libguides.com` (Springshare). The content is UPF's; the platform is not.
+- Every `www.upf.edu` URL, including `/llms.txt` and `/robots.txt`, returns HTTP 403 from a Cloudflare bot challenge. That is a finding about the edge, not a gap in UPF.
+- No course catalog, timetable, registrar, library discovery, research-computing or campus-life API was found on any upf.edu host. `api.upf.edu` resolves but resets the TLS connection.
+- Research-group code (MTG, aig-upf, IPCV, wn-upf, TalnUPF, decolab) lives on GitHub but is not an institutional API offering.
+- No endpoints were fabricated; every claim above is backed by a status code recorded in `x-coverage.evidence` in apis.yml.
 
 ## Maintainers
 

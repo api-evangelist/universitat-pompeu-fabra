@@ -1,46 +1,132 @@
----
 name: Universitat Pompeu Fabra
 description: Universitat Pompeu Fabra public developer/API footprint review for APIs.json cataloging.
 url: https://raw.githubusercontent.com/api-evangelist/universitat-pompeu-fabra/refs/heads/main/review.yml
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-09-01'
 reviews:
-  - date: '2026-06-03'
-    rating: 3
-    summary: >-
-      Verified UPF's public developer footprint with a no-fabrication discipline.
-      The DSpace 7.6 repository REST API and the OAI-PMH endpoint both resolved
-      live (HTTP 200), with the REST root reporting "DSpace 7.6.8-SNAPSHOT" and
-      OAI Identify returning a valid protocol 2.0 response. The "UPF en Xifres
-      2.0" open data portal (data.upf.edu) is documented as a CKAN + Virtuoso
-      SPARQL platform but did not resolve from the test network (connection
-      refused / HTTP 000), likely due to geo or firewall restrictions; it is
-      cataloged from official documentation rather than a live probe. SSO is
-      handled via adAS / Shibboleth SAML and is gated. No general institutional
-      developer portal or API key program was found; research-group code lives on
-      GitHub orgs such as MTG and aig-upf rather than as institutional APIs.
-    endpoints:
-      - url: https://repositori.upf.edu/server/api
-        status: 200
-        note: DSpace 7 REST root, reports DSpace 7.6.8-SNAPSHOT.
-      - url: https://repositori.upf.edu/server/api/core/items
-        status: 401
-        note: Items endpoint requires authentication for listing.
-      - url: https://repositori-api.upf.edu/oai/request?verb=Identify
-        status: 200
-        note: Valid OAI-PMH 2.0 Identify response, repository launched 2009.
-      - url: https://data.upf.edu/about
-        status: 0
-        note: Documented CKAN + Virtuoso SPARQL portal; did not resolve from test network (geo/firewall).
-      - url: https://data.upf.edu/api/3/action/package_list
-        status: 0
-        note: CKAN action API path; documented but did not resolve from test network.
-      - url: https://www.upf.edu/en/home
-        status: 403
-        note: Official site responded 403 to automated request (bot protection); site is live in browsers.
-      - url: https://github.com/mtg
-        status: 200
-        note: Music Technology Group GitHub org, research/audio software code.
-      - url: https://repositori.upf.edu/shibboleth-login
-        status: 200
-        note: adAS / Shibboleth SAML single sign-on entry point.
+- date: '2026-09-01'
+  rating: 3
+  summary: 'Re-profiled 2026-09-01 under the university pipeline, which settles who OPERATES each surface
+    before saving anything. Two corrections to the June 2026 review. First, the "UPF en Xifres 2.0" open
+    data portal is not firewalled — it is gone. data.upf.edu returns an authoritative NXDOMAIN from UPF''s
+    own nameservers (ns1-ns6.upf.edu), reproduced against 8.8.8.8 and 1.1.1.1; the June review saw HTTP
+    000, excused it as geo/firewall restriction, and cataloged the CKAN action API and the Virtuoso SPARQL
+    endpoint from documentation rather than a live probe. Both entries and the DeveloperPortal pointer
+    are removed as dead. Second, the profile was missing UPF''s strongest institution-operated identity
+    surface: its SAML 2.0 Identity Provider registered in eduGAIN through RedIRIS SIR (entityID https://www.rediris.es/sir/upfidp,
+    shibmd:Scope upf.edu, Sirtfi asserted, REFEDS Research and Scholarship), plus a real Shibboleth SP
+    deployed on repositori.upf.edu and advertised by the DSpace REST API''s own WWW-Authenticate header.
+    Also added: Crossref membership (member 14960, prefix 10.31009, 1,593 DOIs) and ROR 04n0g0b29, both
+    recorded as registry memberships with no registry contract saved. guiesbibtic.upf.edu is a Springshare
+    LibGuides tenancy behind a UPF hostname (CNAME secure-eu.libguides.com) and is recorded as tenant.
+    The DSpace 7.6.8 REST/HAL API and the OAI-PMH 2.0 endpoint remain live and remain UPF''s; their contract
+    is the DSpace project''s and is still not saved under this institution. Every www.upf.edu URL is behind
+    a Cloudflare bot challenge (HTTP 403) — a finding about the edge, not about UPF.'
+  endpoints:
+  - url: https://repositori.upf.edu/server/api
+    status: 200
+    note: DSpace 7.6.8-SNAPSHOT HAL root, "Repositori digital de la UPF", 67 link relations.
+  - url: https://repositori.upf.edu/server/api/core/communities
+    status: 200
+    note: 78 communities, unauthenticated.
+  - url: https://repositori.upf.edu/server/api/core/collections
+    status: 200
+    note: 1,022 collections, unauthenticated.
+  - url: https://repositori.upf.edu/server/api/discover/search/objects?size=1
+    status: 200
+    note: 43,503 discoverable objects, unauthenticated.
+  - url: https://repositori.upf.edu/server/api/core/items?size=1
+    status: 401
+    note: Item listing still requires authentication while discovery does not.
+  - url: https://repositori.upf.edu/server/api/authn/status
+    status: 200
+    note: 'WWW-Authenticate: shibboleth realm="DSpace REST API", location=https://repositori.upf.edu/Shibboleth.sso/Login
+      — a deployed Shibboleth SP.'
+  - url: https://repositori-api.upf.edu/oai/request?verb=Identify
+    status: 200
+    note: OAI-PMH 2.0, adminEmail repositori@upf.edu, earliestDatestamp 2009-01-23T11:32:22Z.
+  - url: https://repositori-api.upf.edu/oai/request?verb=ListMetadataFormats
+    status: 200
+    note: '13 prefixes: didl mods ore mets rpb xoai dim uketd_dc qdc oai_dc rdf marc etdms.'
+  - url: https://repositori-api.upf.edu/oai/request?verb=ListSets
+    status: 200
+    note: 100 setSpecs.
+  - url: https://www.rediris.es/sir/upfidp
+    status: 200
+    note: 10,878 bytes of SAML 2.0 metadata; UPF IdP entity in RedIRIS SIR / eduGAIN.
+  - url: https://www.rediris.es/sir/edugain-sir-metadata.xml
+    status: 200
+    note: Federation aggregate; the UPF entity was located inside it.
+  - url: https://api.crossref.org/members/14960
+    status: 200
+    note: Universitat Pompeu Fabra, prefix 10.31009, 1,593 DOIs.
+  - url: https://api.crossref.org/prefixes/10.31009
+    status: 200
+    note: Prefix resolves back to member 14960.
+  - url: https://api.ror.org/v2/organizations/04n0g0b29
+    status: 200
+    note: ROR record, ror_display "Universitat Pompeu Fabra".
+  - url: https://guiesbibtic.upf.edu/iag
+    status: 200
+    note: UPF Library generative-AI guidance; Springshare LibGuides tenant (CNAME secure-eu.libguides.com).
+  - url: https://www.re3data.org/api/v1/repository/r3d100010751
+    status: 200
+    note: re3data record for the UPF Digital Repository.
+  - url: https://data.upf.edu/about
+    status: 0
+    note: 'CORRECTION: NXDOMAIN, not firewalled. Authoritative from ns1-ns6.upf.edu; reproduced on 8.8.8.8
+      and 1.1.1.1. Portal removed from the profile.'
+  - url: https://data.upf.edu/api/3/action/package_list
+    status: 0
+    note: 'CORRECTION: NXDOMAIN. CKAN action API removed from the profile.'
+  - url: https://www.upf.edu/en/home
+    status: 403
+    note: Cloudflare bot challenge to curl with full browser headers and to WebFetch alike. Live, unreadable
+      by us.
+  - url: https://www.upf.edu/llms.txt
+    status: 403
+    note: Same Cloudflare challenge; no llms.txt could be confirmed.
+  - url: https://repositori.upf.edu/llms.txt
+    status: 200
+    note: 'Soft-200: an Anubis bot-check interstitial, not an llms.txt. No AgentDirectives pointer emitted.'
+  - url: https://api.upf.edu/
+    status: 0
+    note: Resolves to 84.89.128.15 but resets the TLS connection; not a public surface.
+  - url: https://github.com/MTG
+    status: 200
+    note: Music Technology Group GitHub org; research code, not an institutional API.
+- date: '2026-06-03'
+  rating: 3
+  summary: Verified UPF's public developer footprint with a no-fabrication discipline. The DSpace 7.6
+    repository REST API and the OAI-PMH endpoint both resolved live (HTTP 200), with the REST root reporting
+    "DSpace 7.6.8-SNAPSHOT" and OAI Identify returning a valid protocol 2.0 response. The "UPF en Xifres
+    2.0" open data portal (data.upf.edu) is documented as a CKAN + Virtuoso SPARQL platform but did not
+    resolve from the test network (connection refused / HTTP 000), likely due to geo or firewall restrictions;
+    it is cataloged from official documentation rather than a live probe. SSO is handled via adAS / Shibboleth
+    SAML and is gated. No general institutional developer portal or API key program was found; research-group
+    code lives on GitHub orgs such as MTG and aig-upf rather than as institutional APIs.
+  endpoints:
+  - url: https://repositori.upf.edu/server/api
+    status: 200
+    note: DSpace 7 REST root, reports DSpace 7.6.8-SNAPSHOT.
+  - url: https://repositori.upf.edu/server/api/core/items
+    status: 401
+    note: Items endpoint requires authentication for listing.
+  - url: https://repositori-api.upf.edu/oai/request?verb=Identify
+    status: 200
+    note: Valid OAI-PMH 2.0 Identify response, repository launched 2009.
+  - url: https://data.upf.edu/about
+    status: 0
+    note: Documented CKAN + Virtuoso SPARQL portal; did not resolve from test network (geo/firewall).
+  - url: https://data.upf.edu/api/3/action/package_list
+    status: 0
+    note: CKAN action API path; documented but did not resolve from test network.
+  - url: https://www.upf.edu/en/home
+    status: 403
+    note: Official site responded 403 to automated request (bot protection); site is live in browsers.
+  - url: https://github.com/mtg
+    status: 200
+    note: Music Technology Group GitHub org, research/audio software code.
+  - url: https://repositori.upf.edu/shibboleth-login
+    status: 200
+    note: adAS / Shibboleth SAML single sign-on entry point.

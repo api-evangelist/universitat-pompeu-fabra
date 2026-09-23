@@ -1,0 +1,175 @@
+generated: '2026-09-01'
+method: derived
+probe_method: probed
+source: https://repositori-api.upf.edu/oai/request?verb=Identify
+x-source-url: https://repositori-api.upf.edu/oai/request?verb=Identify
+authorship: >-
+  Written by API Evangelist from live HTTP and DNS probes run 2026-09-01. Every
+  entry below records the endpoint, the status code and the response detail that
+  established it. Universitat Pompeu Fabra published none of this file; UPF
+  published the endpoints it describes.
+note: >-
+  Education-regime domain-standard conformance for Universitat Pompeu Fabra,
+  established by live probe on 2026-09-01 rather than from a prose claim. UPF
+  publishes no OpenAPI, AsyncAPI or developer portal of its own, so every entry
+  below is evidenced by an HTTP response from a named endpoint, with the status
+  code recorded. Only surfaces UPF itself operates, or holds an
+  institution-specific identity or membership on, are counted; the RedIRIS SIR
+  federation and the Crossref/ROR registries are labelled as such. Reward-only:
+  a standard with no live evidence is recorded conforms:false and is never
+  inferred from the presence of the software that usually implements it.
+regime: education
+regime_id: education
+standards:
+- id: oai-pmh
+  conforms: true
+  operator: institution
+  endpoint: https://repositori-api.upf.edu/oai/request
+  evidence: >-
+    GET https://repositori-api.upf.edu/oai/request?verb=Identify returned HTTP
+    200 text/xml with <repositoryName>Repositori digital de la UPF</repositoryName>,
+    <baseURL>https://repositori-api.upf.edu/oai/request</baseURL>,
+    protocolVersion 2.0, adminEmail repositori@upf.edu, repositoryIdentifier
+    repositori.upf.edu, earliestDatestamp 2009-01-23T11:32:22Z, deletedRecord
+    transient, granularity YYYY-MM-DDThh:mm:ssZ, sampleIdentifier
+    oai:repositori.upf.edu:10230/1234. verb=ListMetadataFormats returned HTTP
+    200 with 13 prefixes: didl, mods, ore, mets, rpb, xoai, dim, uketd_dc, qdc,
+    oai_dc, rdf, marc, etdms. verb=ListSets returned HTTP 200 with 100
+    setSpecs. verb=ListRecords&metadataPrefix=oai_dc returned HTTP 200 and
+    324,957 bytes of records. Host repositori-api.upf.edu is under UPF's own
+    registrable domain and resolves to 84.88.26.109 with no vendor CNAME.
+  probed: '2026-09-01'
+  status: 200
+- id: shibboleth
+  conforms: true
+  operator: institution
+  endpoint: https://repositori.upf.edu/server/api/authn/status
+  evidence: >-
+    GET https://repositori.upf.edu/server/api/authn/status returned HTTP 200
+    application/hal+json with the response header
+    WWW-Authenticate: shibboleth realm="DSpace REST API",
+    location="https://repositori.upf.edu/Shibboleth.sso/Login?target=https%3A%2F%2Frepositori.upf.edu%2Fserver%2Fapi%2Fauthn%2Fshibboleth",
+    password realm="DSpace REST API". A Shibboleth Service Provider is deployed
+    on UPF's own host and advertised by the API itself — not inferred from the
+    repository software. The UPF IdP metadata additionally carries the
+    Shibboleth metadata extension <shibmd:Scope regexp="false">upf.edu</shibmd:Scope>.
+  probed: '2026-09-01'
+  status: 200
+- id: saml
+  conforms: true
+  operator: federation
+  endpoint: https://www.rediris.es/sir/upfidp
+  evidence: >-
+    UPF is registered in eduGAIN as a SAML 2.0 Identity Provider, entityID
+    https://www.rediris.es/sir/upfidp, role IDPSSODescriptor with
+    protocolSupportEnumeration urn:oasis:names:tc:SAML:2.0:protocol,
+    registration authority http://www.rediris.es/ (RedIRIS SIR, the Spanish
+    national R&E federation), registrationInstant 2018-05-24T22:21:00Z,
+    mdui:DisplayName "Universitat Pompeu Fabra" (en/ca/es), shibmd:Scope
+    upf.edu, mdui:DomainHint upf.edu, assurance certification
+    https://refeds.org/sirtfi, entity category
+    http://refeds.org/category/research-and-scholarship, NameIDFormat transient
+    and persistent. GET on the entityID returned HTTP 200 text/xml, 10,878
+    bytes of md:EntitiesDescriptor; the entry was also located inside
+    https://www.rediris.es/sir/edugain-sir-metadata.xml (HTTP 200, 1,593,961
+    bytes). SSOService at
+    https://sir.rediris.es/upf/saml2/idp/SSOService.php and SingleLogoutService
+    at https://sir.rediris.es/upf/saml2/idp/SingleLogoutService.php. Operator is
+    federation: the SSO endpoints run on RedIRIS infrastructure under a
+    UPF-specific /upf/ path, and OrganizationURL points back to
+    https://www.upf.edu/home.
+  probed: '2026-09-01'
+  status: 200
+- id: crossref
+  conforms: true
+  operator: registry
+  endpoint: https://api.crossref.org/members/14960
+  evidence: >-
+    GET https://api.crossref.org/members/14960 returned HTTP 200
+    application/json with primary-name "Universitat Pompeu Fabra", location
+    "Barcelona, Spain", prefixes ["10.31009"], counts current-dois 563,
+    backfile-dois 1030, total-dois 1593. GET
+    https://api.crossref.org/prefixes/10.31009 returned HTTP 200 resolving the
+    prefix to https://id.crossref.org/member/14960, name "Universitat Pompeu
+    Fabra". UPF registers DOIs under its own prefix as a Crossref member; the
+    Crossref API contract belongs to Crossref and is not saved under UPF.
+  probed: '2026-09-01'
+  status: 200
+- id: datacite
+  conforms: false
+  operator: none
+  endpoint: https://api.datacite.org/clients
+  evidence: >-
+    A query of https://api.datacite.org/clients for "pompeu fabra" returned
+    HTTP 200 with meta.total 0 — UPF holds no DataCite repository client and
+    mints no DataCite DOIs of its own. 2,733 DataCite DOIs carry a UPF
+    affiliation (creators.affiliation.affiliationIdentifier
+    https://ror.org/04n0g0b29) but every one of them was registered by another
+    client. Recorded false rather than inferred true from affiliation counts.
+  probed: '2026-09-01'
+  status: 200
+- id: scim
+  conforms: false
+  operator: none
+  endpoint: null
+  evidence: >-
+    No SCIM 2.0 endpoint found on any upf.edu host. /scim/v2 paths on
+    repositori.upf.edu return the DSpace 404 handler; api.upf.edu resets the
+    TLS connection; every candidate identity subdomain (sso., idp., adas.)
+    is NXDOMAIN.
+  probed: '2026-09-01'
+  status: null
+- id: lti
+  conforms: false
+  operator: none
+  endpoint: null
+  evidence: >-
+    UPF's Aula Global runs on Moodle behind institutional authentication and
+    exposes no public LTI platform registration or tool configuration endpoint;
+    aules.upf.edu and campusglobal.upf.edu are NXDOMAIN, and every www.upf.edu
+    path is behind a Cloudflare bot challenge (HTTP 403), so no LTI claim can
+    be evidenced. Recorded false rather than assumed from the presence of an
+    LMS.
+  probed: '2026-09-01'
+  status: null
+- id: orcid
+  conforms: false
+  operator: none
+  endpoint: null
+  evidence: >-
+    No UPF-operated ORCID integration endpoint was found. The DSpace 7.6.8 root
+    at https://repositori.upf.edu/server/api advertises an "authorityinfoes"
+    and an "oidc" link relation but no orcid link relation, and no ORCID member
+    API client or public ORCID-linkage service on a upf.edu host could be
+    probed. Recorded false rather than inferred from DSpace's optional ORCID
+    module.
+  probed: '2026-09-01'
+  status: null
+- id: oneroster
+  conforms: false
+  operator: none
+  endpoint: null
+  evidence: No OneRoster endpoint found on any upf.edu host.
+  probed: '2026-09-01'
+  status: null
+- id: ed-fi
+  conforms: false
+  operator: none
+  endpoint: null
+  evidence: No Ed-Fi endpoint found; Ed-Fi is a US K-12 standard and is not expected here.
+  probed: '2026-09-01'
+  status: null
+- id: caliper
+  conforms: false
+  operator: none
+  endpoint: null
+  evidence: No IMS Caliper analytics endpoint found on any upf.edu host.
+  probed: '2026-09-01'
+  status: null
+- id: qti
+  conforms: false
+  operator: none
+  endpoint: null
+  evidence: No QTI assessment service found on any public upf.edu host.
+  probed: '2026-09-01'
+  status: null
